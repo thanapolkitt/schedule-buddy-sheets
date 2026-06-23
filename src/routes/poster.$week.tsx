@@ -41,6 +41,9 @@ function Poster() {
   // Merit lists from any row (typically same per week)
   const sat = rows.find(r => r.saturdayMerit)?.saturdayMerit || "";
   const sun = rows.find(r => r.sundayMerit)?.sundayMerit || "";
+  // Confirmation call date — typically same across the week, pick first non-empty
+  const callDates = Array.from(new Set(rows.map(r => r.callDate).filter(Boolean)));
+  const callDate = callDates.join(", ");
 
   const download = async () => {
     if (!ref.current) return;
@@ -137,6 +140,22 @@ function Poster() {
             >
               หัวข้อบรรยายสัปดาห์นี้ &nbsp; เริ่มเรียน {startTime}
             </div>
+
+            {callDate && (
+              <div
+                style={{
+                  background: "oklch(0.96 0.04 80)",
+                  color: "oklch(0.35 0.12 30)",
+                  padding: "8px 28px",
+                  fontSize: 14,
+                  textAlign: "center",
+                  borderBottom: "1px solid oklch(0.85 0.08 75)",
+                  fontWeight: 600,
+                }}
+              >
+                ฝ่ายทะเบียนโทรยืนยันการสอน วันที่ {callDate}
+              </div>
+            )}
 
             {/* Content */}
             <div style={{ padding: "24px 28px 16px" }}>
