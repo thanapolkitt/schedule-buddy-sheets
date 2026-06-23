@@ -107,6 +107,29 @@ export const listSchedule = createServerFn({ method: "GET" }).handler(async () =
   return { rows };
 });
 
+export const listMasters = createServerFn({ method: "GET" }).handler(async () => {
+  const url = `${GATEWAY}/spreadsheets/${SPREADSHEET_ID}/values:batchGet?ranges=Master_Teachers!A2:B500&ranges=Master_Food!A2:A500`;
+  const res = await fetch(url, { headers: authHeaders() });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Sheets read failed ${res.status}: ${text}`);
+  }
+  const json = (await res.json()) as { valueRanges?: { values?: string[][] }[] };
+  const [tRange, fRange] = json.valueRanges ?? [];
+  const teachers = (tRange?.values ?? [])
+    .map((row) => {
+      const name = (row[0] ?? "").trim();
+      const nick = (row[1] ?? "").trim();
+      if (!name) return "";
+      return nick ? `${name} (${nick})` : name;
+    })
+    .filter(Boolean);
+  const foods = (fRange?.values ?? [])
+    .map((row) => (row[0] ?? "").trim())
+    .filter(Boolean);
+  return { teachers, foods };
+});
+
 export const updateRow = createServerFn({ method: "POST" })
   .inputValidator((d: ScheduleRow) => d)
   .handler(async ({ data }) => {
