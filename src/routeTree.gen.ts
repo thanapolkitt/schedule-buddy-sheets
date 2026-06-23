@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WeekWeekRouteImport } from './routes/week.$week'
+import { Route as PosterWeekRouteImport } from './routes/poster.$week'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WeekWeekRoute = WeekWeekRouteImport.update({
+  id: '/week/$week',
+  path: '/week/$week',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PosterWeekRoute = PosterWeekRouteImport.update({
+  id: '/poster/$week',
+  path: '/poster/$week',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/poster/$week': typeof PosterWeekRoute
+  '/week/$week': typeof WeekWeekRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/poster/$week': typeof PosterWeekRoute
+  '/week/$week': typeof WeekWeekRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/poster/$week': typeof PosterWeekRoute
+  '/week/$week': typeof WeekWeekRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/poster/$week' | '/week/$week'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/poster/$week' | '/week/$week'
+  id: '__root__' | '/' | '/poster/$week' | '/week/$week'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PosterWeekRoute: typeof PosterWeekRoute
+  WeekWeekRoute: typeof WeekWeekRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/week/$week': {
+      id: '/week/$week'
+      path: '/week/$week'
+      fullPath: '/week/$week'
+      preLoaderRoute: typeof WeekWeekRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poster/$week': {
+      id: '/poster/$week'
+      path: '/poster/$week'
+      fullPath: '/poster/$week'
+      preLoaderRoute: typeof PosterWeekRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PosterWeekRoute: PosterWeekRoute,
+  WeekWeekRoute: WeekWeekRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
