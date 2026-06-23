@@ -116,6 +116,31 @@ function WeekEdit() {
           <div className="bg-card border rounded-2xl p-5 shadow-sm border-[color:var(--maroon)]/20">
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center justify-center rounded-full bg-[color:var(--maroon)] text-white text-xs font-semibold w-7 h-7">
+                ☎
+              </span>
+              <h3 className="font-medium text-[color:var(--maroon)]" style={{ fontFamily: "var(--font-thai)" }}>
+                ฝ่ายทะเบียนโทรยืนยันการสอน
+              </h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3 ml-9">
+              วันที่โทรยืนยันการสอน — ใช้ร่วมกันทั้งสัปดาห์
+            </p>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">โทรวันที่</label>
+              <input
+                value={callDate}
+                onChange={(e) => setCallDate(e.target.value)}
+                placeholder="เช่น 18 ก.พ.68"
+                className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+          </div>
+        )}
+
+        {drafts.length > 0 && (
+          <div className="bg-card border rounded-2xl p-5 shadow-sm border-[color:var(--maroon)]/20">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="inline-flex items-center justify-center rounded-full bg-[color:var(--maroon)] text-white text-xs font-semibold w-7 h-7">
                 ☸
               </span>
               <h3 className="font-medium text-[color:var(--maroon)]" style={{ fontFamily: "var(--font-thai)" }}>
