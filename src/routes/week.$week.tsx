@@ -108,6 +108,48 @@ function WeekEdit() {
         {drafts.length === 0 && (
           <p className="text-center text-muted-foreground py-12">ไม่พบรายการสำหรับสัปดาห์นี้</p>
         )}
+
+        {drafts.length > 0 && (
+          <div className="bg-card border rounded-2xl p-5 shadow-sm border-[color:var(--maroon)]/20">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="inline-flex items-center justify-center rounded-full bg-[color:var(--maroon)] text-white text-xs font-semibold w-7 h-7">
+                ☸
+              </span>
+              <h3 className="font-medium text-[color:var(--maroon)]" style={{ fontFamily: "var(--font-thai)" }}>
+                อาจารย์บุญประจำสัปดาห์
+              </h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3 ml-9">
+              ใช้ร่วมกันทั้ง 3 คาบของวันเสาร์และวันอาทิตย์ — ป้อนครั้งเดียวพอ
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  อ.บุญ วันเสาร์
+                </label>
+                <textarea
+                  rows={2}
+                  value={satMerit}
+                  onChange={(e) => setSatMerit(e.target.value)}
+                  placeholder="เช่น อ.ลัดดาวัลย์(อ.ตุ๋ย), อ.ประภากร(อ.ฮิม), ..."
+                  className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  อ.บุญ วันอาทิตย์
+                </label>
+                <textarea
+                  rows={2}
+                  value={sunMerit}
+                  onChange={(e) => setSunMerit(e.target.value)}
+                  placeholder="เช่น อ.อรพิน(อ.น้อย), อ.ประภากร(อ.ฮิม), ..."
+                  className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                />
+              </div>
+            </div>
+          </div>
+        )}
         {drafts.map((row, idx) => (
           <div key={row.rowIndex} className="bg-card border rounded-2xl p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
