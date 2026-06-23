@@ -29,9 +29,11 @@ const FIELDS: { key: keyof ScheduleRow; label: string; full?: boolean }[] = [
   { key: "follower", label: "ผู้ติดตาม" },
   { key: "food", label: "อาหาร" },
   { key: "parking", label: "ที่จอดรถ" },
-  { key: "saturdayMerit", label: "อาจารย์บุญวันเสาร์", full: true },
-  { key: "sundayMerit", label: "อาจารย์บุญวันอาทิตย์", full: true },
 ];
+
+function pickMerit(rows: ScheduleRow[], key: "saturdayMerit" | "sundayMerit"): string {
+  return rows.find((r) => r[key])?.[key] ?? "";
+}
 
 function WeekEdit() {
   const { week } = Route.useParams();
