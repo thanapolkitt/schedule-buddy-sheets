@@ -31,7 +31,7 @@ const FIELDS: { key: keyof ScheduleRow; label: string; full?: boolean }[] = [
   { key: "parking", label: "ที่จอดรถ" },
 ];
 
-function pickMerit(rows: ScheduleRow[], key: "saturdayMerit" | "sundayMerit"): string {
+function pickShared(rows: ScheduleRow[], key: "saturdayMerit" | "sundayMerit" | "callDate"): string {
   return rows.find((r) => r[key])?.[key] ?? "";
 }
 
@@ -43,12 +43,14 @@ function WeekEdit() {
   const weekRows = data.rows.filter((r) => r.week === week);
 
   const [drafts, setDrafts] = useState<ScheduleRow[]>(weekRows);
-  const [satMerit, setSatMerit] = useState<string>(pickMerit(weekRows, "saturdayMerit"));
-  const [sunMerit, setSunMerit] = useState<string>(pickMerit(weekRows, "sundayMerit"));
+  const [satMerit, setSatMerit] = useState<string>(pickShared(weekRows, "saturdayMerit"));
+  const [sunMerit, setSunMerit] = useState<string>(pickShared(weekRows, "sundayMerit"));
+  const [callDate, setCallDate] = useState<string>(pickShared(weekRows, "callDate"));
   useEffect(() => {
     setDrafts(weekRows);
-    setSatMerit(pickMerit(weekRows, "saturdayMerit"));
-    setSunMerit(pickMerit(weekRows, "sundayMerit"));
+    setSatMerit(pickShared(weekRows, "saturdayMerit"));
+    setSunMerit(pickShared(weekRows, "sundayMerit"));
+    setCallDate(pickShared(weekRows, "callDate"));
   }, [data]); // eslint-disable-line
 
   const updateFn = useServerFn(updateRow);
@@ -57,6 +59,7 @@ function WeekEdit() {
       // Apply the shared merit values to every row of the week before saving
       const merged = rows.map((r) => ({
         ...r,
+        callDate,
         saturdayMerit: satMerit,
         sundayMerit: sunMerit,
       }));
@@ -107,6 +110,31 @@ function WeekEdit() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-4">
         {drafts.length === 0 && (
           <p className="text-center text-muted-foreground py-12">ไม่พบรายการสำหรับสัปดาห์นี้</p>
+        )}
+
+        {drafts.length > 0 && (
+          <div className="bg-card border rounded-2xl p-5 shadow-sm border-[color:var(--maroon)]/20">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="inline-flex items-center justify-center rounded-full bg-[color:var(--maroon)] text-white text-xs font-semibold w-7 h-7">
+                ☎
+              </span>
+              <h3 className="font-medium text-[color:var(--maroon)]" style={{ fontFamily: "var(--font-thai)" }}>
+                ฝ่ายทะเบียนโทรยืนยันการสอน
+              </h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3 ml-9">
+              วันที่โทรยืนยันการสอน — ใช้ร่วมกันทั้งสัปดาห์
+            </p>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">โทรวันที่</label>
+              <input
+                value={callDate}
+                onChange={(e) => setCallDate(e.target.value)}
+                placeholder="เช่น 18 ก.พ.68"
+                className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+          </div>
         )}
 
         {drafts.length > 0 && (
