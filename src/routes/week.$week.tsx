@@ -31,7 +31,7 @@ const FIELDS: { key: keyof ScheduleRow; label: string; full?: boolean }[] = [
   { key: "parking", label: "ที่จอดรถ" },
 ];
 
-function pickMerit(rows: ScheduleRow[], key: "saturdayMerit" | "sundayMerit"): string {
+function pickShared(rows: ScheduleRow[], key: "saturdayMerit" | "sundayMerit" | "callDate"): string {
   return rows.find((r) => r[key])?.[key] ?? "";
 }
 
@@ -43,12 +43,14 @@ function WeekEdit() {
   const weekRows = data.rows.filter((r) => r.week === week);
 
   const [drafts, setDrafts] = useState<ScheduleRow[]>(weekRows);
-  const [satMerit, setSatMerit] = useState<string>(pickMerit(weekRows, "saturdayMerit"));
-  const [sunMerit, setSunMerit] = useState<string>(pickMerit(weekRows, "sundayMerit"));
+  const [satMerit, setSatMerit] = useState<string>(pickShared(weekRows, "saturdayMerit"));
+  const [sunMerit, setSunMerit] = useState<string>(pickShared(weekRows, "sundayMerit"));
+  const [callDate, setCallDate] = useState<string>(pickShared(weekRows, "callDate"));
   useEffect(() => {
     setDrafts(weekRows);
-    setSatMerit(pickMerit(weekRows, "saturdayMerit"));
-    setSunMerit(pickMerit(weekRows, "sundayMerit"));
+    setSatMerit(pickShared(weekRows, "saturdayMerit"));
+    setSunMerit(pickShared(weekRows, "sundayMerit"));
+    setCallDate(pickShared(weekRows, "callDate"));
   }, [data]); // eslint-disable-line
 
   const updateFn = useServerFn(updateRow);
