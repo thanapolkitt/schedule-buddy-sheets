@@ -232,15 +232,15 @@ function WeekEdit() {
                     {opts ? (
                       <>
                         <select
-                          value={opts.includes(value) ? value : ""}
+                          value={value}
                           onChange={(e) => setField(idx, f.key, e.target.value)}
                           className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                         >
                           <option value="">— เลือก —</option>
-                          {!opts.includes(value) && value && (
+                          {value && (
                             <option value={value}>{value} (ค่าเดิม)</option>
                           )}
-                          {opts.map((o) => (
+                          {opts.filter((o) => o !== value).map((o) => (
                             <option key={o} value={o}>
                               {o}
                             </option>
