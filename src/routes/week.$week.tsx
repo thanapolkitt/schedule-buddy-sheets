@@ -54,6 +54,9 @@ function WeekEdit() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const { data } = useSuspenseQuery(scheduleQO);
+  const mastersQuery = useQuery(mastersQO);
+  const teacherOptions = mastersQuery.data?.teachers ?? [];
+  const foodOptions = mastersQuery.data?.foods ?? [];
   const weekRows = data.rows.filter((r) => r.week === week);
 
   const [drafts, setDrafts] = useState<ScheduleRow[]>(weekRows);
@@ -141,12 +144,28 @@ function WeekEdit() {
             </p>
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">โทรวันที่</label>
-              <input
-                value={callDate}
-                onChange={(e) => setCallDate(e.target.value)}
-                placeholder="เช่น 18 ก.พ.68"
-                className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-              />
+              <div className="flex flex-wrap items-center gap-2">
+                <input
+                  type="date"
+                  value={thaiToIso(callDate)}
+                  onChange={(e) => setCallDate(isoToThai(e.target.value))}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                />
+                {callDate && (
+                  <span className="text-sm text-[color:var(--maroon)] font-medium">
+                    {callDate}
+                  </span>
+                )}
+                {callDate && (
+                  <button
+                    type="button"
+                    onClick={() => setCallDate("")}
+                    className="text-xs text-muted-foreground underline hover:text-foreground"
+                  >
+                    ล้าง
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -203,16 +222,44 @@ function WeekEdit() {
               </h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {FIELDS.map((f) => (
-                <div key={f.key} className={f.full ? "sm:col-span-2" : ""}>
-                  <label className="block text-xs font-medium text-muted-foreground mb-1">{f.label}</label>
-                  <input
-                    value={(row[f.key] as string) ?? ""}
-                    onChange={(e) => setField(idx, f.key, e.target.value)}
-                    className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                  />
-                </div>
-              ))}
+              {FIELDS.map((f) => {
+                const value = (row[f.key] as string) ?? "";
+                const opts =
+                  f.options === "teachers" ? teacherOptions : f.options === "food" ? foodOptions : null;
+                return (
+                  <div key={f.key} className={f.full ? "sm:col-span-2" : ""}>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">{f.label}</label>
+                    {opts ? (
+                      <>
+                        <select
+                          value={opts.includes(value) ? value : ""}
+                          onChange={(e) => setField(idx, f.key, e.target.value)}
+                          className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                        >
+                          <option value="">— เลือก —</option>
+                          {!opts.includes(value) && value && (
+                            <option value={value}>{value} (ค่าเดิม)</option>
+                          )}
+                          {opts.map((o) => (
+                            <option key={o} value={o}>
+                              {o}
+                            </option>
+                          ))}
+                        </select>
+                        {mastersQuery.isLoading && (
+                          <p className="text-[10px] text-muted-foreground mt-1">กำลังโหลดรายชื่อ…</p>
+                        )}
+                      </>
+                    ) : (
+                      <input
+                        value={value}
+                        onChange={(e) => setField(idx, f.key, e.target.value)}
+                        className="w-full rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                      />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
