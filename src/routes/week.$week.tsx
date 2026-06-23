@@ -59,6 +59,7 @@ function WeekEdit() {
       // Apply the shared merit values to every row of the week before saving
       const merged = rows.map((r) => ({
         ...r,
+        callDate,
         saturdayMerit: satMerit,
         sundayMerit: sunMerit,
       }));
