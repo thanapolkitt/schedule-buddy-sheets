@@ -41,6 +41,9 @@ function Poster() {
   // Merit lists from any row (typically same per week)
   const sat = rows.find(r => r.saturdayMerit)?.saturdayMerit || "";
   const sun = rows.find(r => r.sundayMerit)?.sundayMerit || "";
+  // Confirmation call date — typically same across the week, pick first non-empty
+  const callDates = Array.from(new Set(rows.map(r => r.callDate).filter(Boolean)));
+  const callDate = callDates.join(", ");
 
   const download = async () => {
     if (!ref.current) return;
