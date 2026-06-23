@@ -43,12 +43,24 @@ function WeekEdit() {
   const weekRows = data.rows.filter((r) => r.week === week);
 
   const [drafts, setDrafts] = useState<ScheduleRow[]>(weekRows);
-  useEffect(() => { setDrafts(weekRows); }, [data]); // eslint-disable-line
+  const [satMerit, setSatMerit] = useState<string>(pickMerit(weekRows, "saturdayMerit"));
+  const [sunMerit, setSunMerit] = useState<string>(pickMerit(weekRows, "sundayMerit"));
+  useEffect(() => {
+    setDrafts(weekRows);
+    setSatMerit(pickMerit(weekRows, "saturdayMerit"));
+    setSunMerit(pickMerit(weekRows, "sundayMerit"));
+  }, [data]); // eslint-disable-line
 
   const updateFn = useServerFn(updateRow);
   const mutation = useMutation({
     mutationFn: async (rows: ScheduleRow[]) => {
-      for (const r of rows) {
+      // Apply the shared merit values to every row of the week before saving
+      const merged = rows.map((r) => ({
+        ...r,
+        saturdayMerit: satMerit,
+        sundayMerit: sunMerit,
+      }));
+      for (const r of merged) {
         await updateFn({ data: r });
       }
     },
