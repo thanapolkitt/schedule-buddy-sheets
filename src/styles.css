@@ -148,3 +148,19 @@
     color: var(--color-foreground);
   }
 }
+
+@theme inline {
+  --color-maroon: var(--maroon);
+  --color-maroon-foreground: var(--maroon-foreground);
+  --color-saffron: var(--saffron);
+  --color-gold: var(--gold);
+  --color-paper: var(--paper);
+  --font-thai: "Prompt", "Sarabun", system-ui, sans-serif;
+  --font-thai-body: "Sarabun", system-ui, sans-serif;
+}
+
+@layer base {
+  html, body {
+    font-family: var(--font-thai-body);
+  }
+}
