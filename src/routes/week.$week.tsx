@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useSuspenseQuery, queryOptions, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSuspenseQuery, queryOptions, useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { listSchedule, updateRow, type ScheduleRow } from "@/lib/schedule.functions";
+import { listSchedule, listMasters, updateRow, type ScheduleRow } from "@/lib/schedule.functions";
+import { isoToThai, thaiToIso } from "@/lib/thai-date";
 import { useState, useEffect } from "react";
 import { ArrowLeft, Save, Image as ImageIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -9,6 +10,12 @@ import { toast } from "sonner";
 const scheduleQO = queryOptions({
   queryKey: ["schedule"],
   queryFn: () => listSchedule(),
+});
+
+const mastersQO = queryOptions({
+  queryKey: ["masters"],
+  queryFn: () => listMasters(),
+  staleTime: 5 * 60 * 1000,
 });
 
 export const Route = createFileRoute("/week/$week")({
@@ -19,15 +26,22 @@ export const Route = createFileRoute("/week/$week")({
   component: WeekEdit,
 });
 
-const FIELDS: { key: keyof ScheduleRow; label: string; full?: boolean }[] = [
+type FieldDef = {
+  key: keyof ScheduleRow;
+  label: string;
+  full?: boolean;
+  options?: "teachers" | "food";
+};
+
+const FIELDS: FieldDef[] = [
   { key: "teachDate", label: "วันที่สอน" },
   { key: "period", label: "คาบ" },
   { key: "time", label: "ช่วงเวลา" },
-  { key: "teacher", label: "อาจารย์ผู้บรรยาย" },
+  { key: "teacher", label: "อาจารย์ผู้บรรยาย", options: "teachers" },
   { key: "topic", label: "หัวข้อ", full: true },
   { key: "carPlate", label: "ทะเบียนรถ" },
   { key: "follower", label: "ผู้ติดตาม" },
-  { key: "food", label: "อาหาร" },
+  { key: "food", label: "อาหาร", options: "food" },
   { key: "parking", label: "ที่จอดรถ" },
 ];
 
