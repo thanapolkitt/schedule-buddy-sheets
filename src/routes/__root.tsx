@@ -17,6 +17,7 @@ import "@fontsource/prompt/700.css";
 import "@fontsource/sarabun/400.css";
 import "@fontsource/sarabun/600.css";
 import "@fontsource/sarabun/700.css";
+import { Toaster as SonnerToaster } from "sonner";
 
 function NotFoundComponent() {
   return (
