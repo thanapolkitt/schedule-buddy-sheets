@@ -80,7 +80,14 @@ function Index() {
                   params={{ week }}
                   className="inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-card text-primary px-4 py-2 text-sm font-medium hover:bg-primary/5 transition"
                 >
-                  <ImageIcon className="w-4 h-4" /> ภาพ
+                  <ImageIcon className="w-4 h-4" /> ภาพประกาศ
+                </Link>
+                <Link
+                  to="/food/$week"
+                  params={{ week }}
+                  className="inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-card text-primary px-4 py-2 text-sm font-medium hover:bg-primary/5 transition"
+                >
+                  <UtensilsCrossed className="w-4 h-4" /> ใบงานอาหาร
                 </Link>
               </div>
             </div>
