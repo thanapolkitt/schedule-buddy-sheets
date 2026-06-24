@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { listSchedule, type ScheduleRow } from "@/lib/schedule.functions";
-import { Calendar, Pencil, Image as ImageIcon } from "lucide-react";
+import { Calendar, Pencil, Image as ImageIcon, UtensilsCrossed } from "lucide-react";
 
 const scheduleQO = queryOptions({
   queryKey: ["schedule"],
