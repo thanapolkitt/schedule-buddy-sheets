@@ -127,13 +127,23 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
       </div>
       {/* Date line */}
       <div style={{ padding: "0 4px 10px", fontSize: 18, color: "#1f2a44", fontWeight: 600 }}>
-        สอน วัน{parsed?.weekday ?? ""} ที่{" "}
-        <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed?.day ?? ""}</span>
-        {" "}เดือน{" "}
-        <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed?.monthName ?? ""}</span>
-        {" "}พ.ศ.{" "}
-        <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed?.beYear ?? ""}</span>
+        {parsed ? (
+          <>
+            สอน วัน{parsed.weekday} ที่{" "}
+            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.day}</span>
+            {" "}เดือน{" "}
+            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.monthName}</span>
+            {" "}พ.ศ.{" "}
+            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.beYear}</span>
+          </>
+        ) : (
+          <>
+            สอนวันที่{" "}
+            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{date}</span>
+          </>
+        )}
       </div>
+
 
       <table style={{ width: "100%", borderCollapse: "collapse", background: "#fff", tableLayout: "fixed" }}>
         <colgroup>
