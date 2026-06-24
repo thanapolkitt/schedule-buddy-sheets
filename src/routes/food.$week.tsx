@@ -23,17 +23,42 @@ const THAI_MONTHS_FULL = [
   "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
   "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม",
 ];
+const THAI_MONTHS_SHORT = [
+  "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
+  "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.",
+];
 const THAI_WEEKDAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
 
-function parseDate(thai: string) {
-  const iso = thaiToIso(thai);
-  if (!iso) return null;
-  const [y, m, d] = iso.split("-").map(Number);
-  const dt = new Date(Date.UTC(y, m - 1, d));
+function parseDate(raw: string) {
+  if (!raw) return null;
+  let y = 0, mo = 0, d = 0;
+  // Try ISO via thaiToIso (handles short format like "13 มิ.ย.69")
+  const iso = thaiToIso(raw);
+  if (iso) {
+    [y, mo, d] = iso.split("-").map(Number);
+  } else {
+    // Try full Thai format e.g. "13 มิถุนายน 2569" or "13 มิถุนายน 69"
+    const cleaned = raw.replace(/\s+/g, " ").trim();
+    const m = /^(\d{1,2})\s*([\u0E00-\u0E7F.]+?)\s*(\d{2,4})$/.exec(cleaned);
+    if (!m) return null;
+    d = parseInt(m[1], 10);
+    const monText = m[2].replace(/\s/g, "");
+    let idx = THAI_MONTHS_FULL.findIndex((x) => x === monText);
+    if (idx < 0) idx = THAI_MONTHS_SHORT.findIndex((x) => x === monText || x.replace(/\./g, "") === monText.replace(/\./g, ""));
+    if (idx < 0) return null;
+    mo = idx + 1;
+    y = parseInt(m[3], 10);
+    if (y < 100) y = 2500 + y;
+    if (y < 2400) y += 543; // CE -> BE; keep BE for display
+  }
+  // y here may be CE (from iso) or BE (from full-format branch). Normalize.
+  const ce = y > 2400 ? y - 543 : y;
+  const be = y > 2400 ? y : y + 543;
+  const dt = new Date(Date.UTC(ce, mo - 1, d));
   return {
     day: d,
-    monthName: THAI_MONTHS_FULL[m - 1],
-    beYear: y + 543,
+    monthName: THAI_MONTHS_FULL[mo - 1],
+    beYear: be,
     weekday: THAI_WEEKDAYS[dt.getUTCDay()],
   };
 }
