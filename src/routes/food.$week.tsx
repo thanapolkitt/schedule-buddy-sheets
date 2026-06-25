@@ -99,10 +99,12 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
   };
   const dataCell: React.CSSProperties = {
     border: "1.5px solid #1f2a44",
-    padding: "10px 12px",
+    padding: "10px 8px",
     verticalAlign: "middle",
-    fontSize: 16,
+    fontSize: 14,
     minHeight: 36,
+    textAlign: "center",
+    wordBreak: "break-word",
   };
 
   const rowDef: { label: string; key: keyof ScheduleRow }[] = [
@@ -115,33 +117,21 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
   ];
 
   return (
-    <div style={{ marginBottom: 18 }}>
+    <div style={{ marginBottom: 14 }}>
       {/* Header row: โทรวันที่ + สัปดาห์ที่ */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 4px 6px", fontSize: 18 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 2px 4px", fontSize: 13 }}>
         <div style={{ fontWeight: 700, color: "#1f2a44" }}>
-          โทรวันที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 18px", minWidth: 80, display: "inline-block", textAlign: "center" }}>{callDate || ""}</span>
+          โทรวันที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px", minWidth: 50, display: "inline-block", textAlign: "center" }}>{callDate || ""}</span>
         </div>
         <div style={{ fontWeight: 700, color: "#1f2a44" }}>
-          สัปดาห์ที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 18px", minWidth: 60, display: "inline-block", textAlign: "center" }}>{week}</span>
+          สัปดาห์ที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px", minWidth: 36, display: "inline-block", textAlign: "center" }}>{week}</span>
         </div>
       </div>
-      {/* Date line */}
-      <div style={{ padding: "0 4px 10px", fontSize: 18, color: "#1f2a44", fontWeight: 600 }}>
-        {parsed ? (
-          <>
-            สอน วัน{parsed.weekday} ที่{" "}
-            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.day}</span>
-            {" "}เดือน{" "}
-            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.monthName}</span>
-            {" "}พ.ศ.{" "}
-            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.beYear}</span>
-          </>
-        ) : (
-          <>
-            สอนวันที่{" "}
-            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{date}</span>
-          </>
-        )}
+      {/* Date line - full Thai format */}
+      <div style={{ padding: "0 2px 8px", fontSize: 15, color: "#1f2a44", fontWeight: 700, textAlign: "center" }}>
+        {parsed
+          ? `สอน วัน${parsed.weekday}ที่ ${parsed.day} ${parsed.monthName} ${parsed.beYear}`
+          : `สอนวันที่ ${date}`}
       </div>
 
 
