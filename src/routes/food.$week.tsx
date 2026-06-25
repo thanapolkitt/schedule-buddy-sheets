@@ -213,11 +213,12 @@ function FoodPoster() {
             ref={ref}
             className="mx-auto"
             style={{
-              width: 820,
+              width: 420,
+              maxWidth: "100%",
               fontFamily: "var(--font-thai)",
               background: "#eef1fb",
               color: "#1f2a44",
-              padding: "28px 28px 32px",
+              padding: "16px 14px 20px",
               borderRadius: 8,
               boxShadow: "0 12px 40px -10px rgba(30,50,90,0.18)",
             }}
