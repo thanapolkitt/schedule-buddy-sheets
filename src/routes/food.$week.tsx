@@ -138,10 +138,11 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
 
       <table style={{ width: "100%", borderCollapse: "collapse", background: "#fff", tableLayout: "fixed" }}>
         <colgroup>
-          <col style={{ width: 110 }} />
+          <col style={{ width: 86 }} />
           <col />
           <col />
           <col />
+        </colgroup>
         </colgroup>
         <tbody>
           {rowDef.map((rd) => (
