@@ -4,6 +4,43 @@ import { listSchedule, type ScheduleRow } from "@/lib/schedule.functions";
 import { useRef, useState } from "react";
 import { ArrowLeft, Download, Loader2 } from "lucide-react";
 import { toPng } from "html-to-image";
+import { thaiToIso } from "@/lib/thai-date";
+
+const THAI_MONTHS_FULL = [
+  "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+  "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม",
+];
+const THAI_MONTHS_SHORT = [
+  "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
+  "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.",
+];
+const THAI_WEEKDAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+
+function formatFullThaiDate(raw: string): string {
+  if (!raw) return "";
+  let y = 0, mo = 0, d = 0;
+  const iso = thaiToIso(raw);
+  if (iso) {
+    [y, mo, d] = iso.split("-").map(Number);
+  } else {
+    const cleaned = raw.replace(/\s+/g, " ").trim();
+    const m = /^(\d{1,2})\s*([\u0E00-\u0E7F.]+?)\s*(\d{2,4})$/.exec(cleaned);
+    if (!m) return raw;
+    d = parseInt(m[1], 10);
+    const monText = m[2].replace(/\s/g, "");
+    let idx = THAI_MONTHS_FULL.findIndex((x) => x === monText);
+    if (idx < 0) idx = THAI_MONTHS_SHORT.findIndex((x) => x === monText || x.replace(/\./g, "") === monText.replace(/\./g, ""));
+    if (idx < 0) return raw;
+    mo = idx + 1;
+    y = parseInt(m[3], 10);
+    if (y < 100) y = 2500 + y;
+  }
+  const ce = y > 2400 ? y - 543 : y;
+  const be = y > 2400 ? y : y + 543;
+  const dt = new Date(Date.UTC(ce, mo - 1, d));
+  const weekday = THAI_WEEKDAYS[dt.getUTCDay()];
+  return `วัน${weekday}ที่ ${d} ${THAI_MONTHS_FULL[mo - 1]} ${be}`;
+}
 
 const scheduleQO = queryOptions({
   queryKey: ["schedule"],
