@@ -228,7 +228,7 @@ function FoodPoster() {
                 <DayTable rows={items} date={date} week={week} callDate={callDate} />
                 {/* Parking note between Saturday and Sunday (after first table) */}
                 {idx === 0 && parking && (
-                  <div style={{ textAlign: "center", color: "#c0202a", fontWeight: 700, fontSize: 18, margin: "10px 0 22px" }}>
+                  <div style={{ textAlign: "center", color: "#c0202a", fontWeight: 700, fontSize: 14, margin: "6px 0 14px" }}>
                     {parking}
                   </div>
                 )}
