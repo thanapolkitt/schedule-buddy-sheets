@@ -90,19 +90,22 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
 
   const labelCell: React.CSSProperties = {
     border: "1.5px solid #1f2a44",
-    padding: "10px 12px",
+    padding: "10px 8px",
     fontWeight: 600,
     background: "#f0f4ff",
-    width: 110,
+    width: 86,
     verticalAlign: "middle",
-    fontSize: 16,
+    fontSize: 14,
+    textAlign: "center",
   };
   const dataCell: React.CSSProperties = {
     border: "1.5px solid #1f2a44",
-    padding: "10px 12px",
+    padding: "10px 8px",
     verticalAlign: "middle",
-    fontSize: 16,
+    fontSize: 14,
     minHeight: 36,
+    textAlign: "center",
+    wordBreak: "break-word",
   };
 
   const rowDef: { label: string; key: keyof ScheduleRow }[] = [
@@ -115,39 +118,27 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
   ];
 
   return (
-    <div style={{ marginBottom: 18 }}>
+    <div style={{ marginBottom: 14 }}>
       {/* Header row: โทรวันที่ + สัปดาห์ที่ */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 4px 6px", fontSize: 18 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 2px 4px", fontSize: 13 }}>
         <div style={{ fontWeight: 700, color: "#1f2a44" }}>
-          โทรวันที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 18px", minWidth: 80, display: "inline-block", textAlign: "center" }}>{callDate || ""}</span>
+          โทรวันที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px", minWidth: 50, display: "inline-block", textAlign: "center" }}>{callDate || ""}</span>
         </div>
         <div style={{ fontWeight: 700, color: "#1f2a44" }}>
-          สัปดาห์ที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 18px", minWidth: 60, display: "inline-block", textAlign: "center" }}>{week}</span>
+          สัปดาห์ที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px", minWidth: 36, display: "inline-block", textAlign: "center" }}>{week}</span>
         </div>
       </div>
-      {/* Date line */}
-      <div style={{ padding: "0 4px 10px", fontSize: 18, color: "#1f2a44", fontWeight: 600 }}>
-        {parsed ? (
-          <>
-            สอน วัน{parsed.weekday} ที่{" "}
-            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.day}</span>
-            {" "}เดือน{" "}
-            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.monthName}</span>
-            {" "}พ.ศ.{" "}
-            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{parsed.beYear}</span>
-          </>
-        ) : (
-          <>
-            สอนวันที่{" "}
-            <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px" }}>{date}</span>
-          </>
-        )}
+      {/* Date line - full Thai format */}
+      <div style={{ padding: "0 2px 8px", fontSize: 15, color: "#1f2a44", fontWeight: 700, textAlign: "center" }}>
+        {parsed
+          ? `สอน วัน${parsed.weekday}ที่ ${parsed.day} ${parsed.monthName} ${parsed.beYear}`
+          : `สอนวันที่ ${date}`}
       </div>
 
 
       <table style={{ width: "100%", borderCollapse: "collapse", background: "#fff", tableLayout: "fixed" }}>
         <colgroup>
-          <col style={{ width: 110 }} />
+          <col style={{ width: 86 }} />
           <col />
           <col />
           <col />
@@ -222,11 +213,12 @@ function FoodPoster() {
             ref={ref}
             className="mx-auto"
             style={{
-              width: 820,
+              width: 420,
+              maxWidth: "100%",
               fontFamily: "var(--font-thai)",
               background: "#eef1fb",
               color: "#1f2a44",
-              padding: "28px 28px 32px",
+              padding: "16px 14px 20px",
               borderRadius: 8,
               boxShadow: "0 12px 40px -10px rgba(30,50,90,0.18)",
             }}
@@ -236,7 +228,7 @@ function FoodPoster() {
                 <DayTable rows={items} date={date} week={week} callDate={callDate} />
                 {/* Parking note between Saturday and Sunday (after first table) */}
                 {idx === 0 && parking && (
-                  <div style={{ textAlign: "center", color: "#c0202a", fontWeight: 700, fontSize: 18, margin: "10px 0 22px" }}>
+                  <div style={{ textAlign: "center", color: "#c0202a", fontWeight: 700, fontSize: 14, margin: "6px 0 14px" }}>
                     {parking}
                   </div>
                 )}
