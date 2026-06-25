@@ -143,7 +143,6 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
           <col />
           <col />
         </colgroup>
-        </colgroup>
         <tbody>
           {rowDef.map((rd) => (
             <tr key={rd.label}>
