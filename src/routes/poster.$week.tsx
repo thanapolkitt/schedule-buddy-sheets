@@ -260,17 +260,17 @@ function Poster() {
                   style={{
                     background: "oklch(0.35 0.12 30)",
                     color: "oklch(0.98 0.02 80)",
-                    padding: "10px 28px",
+                    padding: "8px 16px",
                     textAlign: "center",
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: 600,
                   }}
                 >
                   อาจารย์บุญสัปดาห์นี้
                 </div>
-                <div style={{ padding: "14px 28px 24px", fontSize: 15, lineHeight: 1.7 }}>
+                <div style={{ padding: "10px 16px 16px", fontSize: 12, lineHeight: 1.6 }}>
                   {sat && (
-                    <div style={{ marginBottom: 6 }}>
+                    <div style={{ marginBottom: 4 }}>
                       <span style={{ fontWeight: 700, color: "oklch(0.35 0.12 30)" }}>เสาร์: </span>
                       {sat}
                     </div>
