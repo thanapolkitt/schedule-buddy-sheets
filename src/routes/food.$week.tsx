@@ -129,7 +129,7 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
         </div>
       </div>
       {/* Date line - full Thai format */}
-      <div style={{ padding: "0 2px 8px", fontSize: 15, color: "#1f2a44", fontWeight: 700, textAlign: "center" }}>
+      <div style={{ padding: "0 2px 10px", fontSize: 16, color: "#1f2a44", fontWeight: 700, textAlign: "center" }}>
         {parsed
           ? `สอน วัน${parsed.weekday}ที่ ${parsed.day} ${parsed.monthName} ${parsed.beYear}`
           : `สอนวันที่ ${date}`}
