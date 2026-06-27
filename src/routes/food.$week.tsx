@@ -90,20 +90,20 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
 
   const labelCell: React.CSSProperties = {
     border: "1.5px solid #1f2a44",
-    padding: "10px 8px",
+    padding: "12px 10px",
     fontWeight: 600,
     background: "#f0f4ff",
-    width: 86,
+    width: 120,
     verticalAlign: "middle",
-    fontSize: 14,
+    fontSize: 15,
     textAlign: "center",
   };
   const dataCell: React.CSSProperties = {
     border: "1.5px solid #1f2a44",
-    padding: "10px 8px",
+    padding: "12px 10px",
     verticalAlign: "middle",
-    fontSize: 14,
-    minHeight: 36,
+    fontSize: 15,
+    minHeight: 44,
     textAlign: "center",
     wordBreak: "break-word",
   };
@@ -120,7 +120,7 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
   return (
     <div style={{ marginBottom: 14 }}>
       {/* Header row: โทรวันที่ + สัปดาห์ที่ */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 2px 4px", fontSize: 13 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 2px 6px", fontSize: 14 }}>
         <div style={{ fontWeight: 700, color: "#1f2a44" }}>
           โทรวันที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px", minWidth: 50, display: "inline-block", textAlign: "center" }}>{callDate || ""}</span>
         </div>
@@ -129,7 +129,7 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
         </div>
       </div>
       {/* Date line - full Thai format */}
-      <div style={{ padding: "0 2px 8px", fontSize: 15, color: "#1f2a44", fontWeight: 700, textAlign: "center" }}>
+      <div style={{ padding: "0 2px 10px", fontSize: 16, color: "#1f2a44", fontWeight: 700, textAlign: "center" }}>
         {parsed
           ? `สอน วัน${parsed.weekday}ที่ ${parsed.day} ${parsed.monthName} ${parsed.beYear}`
           : `สอนวันที่ ${date}`}
@@ -213,12 +213,12 @@ function FoodPoster() {
             ref={ref}
             className="mx-auto"
             style={{
-              width: 420,
+              width: 820,
               maxWidth: "100%",
               fontFamily: "var(--font-thai)",
               background: "#eef1fb",
               color: "#1f2a44",
-              padding: "16px 14px 20px",
+              padding: "20px 18px 24px",
               borderRadius: 8,
               boxShadow: "0 12px 40px -10px rgba(30,50,90,0.18)",
             }}
