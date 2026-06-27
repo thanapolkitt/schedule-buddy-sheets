@@ -120,7 +120,7 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
   return (
     <div style={{ marginBottom: 14 }}>
       {/* Header row: โทรวันที่ + สัปดาห์ที่ */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 2px 4px", fontSize: 13 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 2px 6px", fontSize: 14 }}>
         <div style={{ fontWeight: 700, color: "#1f2a44" }}>
           โทรวันที่ <span style={{ borderBottom: "1.5px dotted #1f2a44", padding: "0 10px", minWidth: 50, display: "inline-block", textAlign: "center" }}>{callDate || ""}</span>
         </div>
