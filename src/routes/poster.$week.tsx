@@ -202,7 +202,7 @@ function Poster() {
                     const title = m?.[2] || r.topic;
                     return (
                       <div key={r.rowIndex} style={{ display: "flex", gap: 8, marginBottom: 8, alignItems: "flex-start" }}>
-                        {code && (
+                        {code ? (
                           <div
                             style={{
                               minWidth: 52,
@@ -214,7 +214,9 @@ function Poster() {
                           >
                             {code}
                           </div>
-                        )}
+                        ) : /^(สวดมนต์|กิจกรรม|วันหยุด)/.test(r.topic) ? (
+                          <div style={{ minWidth: 52 }} />
+                        ) : null}
                         <div style={{ flex: 1 }}>
                           <div style={{ fontSize: 14, fontWeight: 600, color: "oklch(0.25 0.04 35)" }}>
                             {title}
