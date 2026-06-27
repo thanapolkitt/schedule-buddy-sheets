@@ -19,11 +19,13 @@ const THAI_WEEKDAYS = ["อาทิตย์", "จันทร์", "อัง
 function formatFullThaiDate(raw: string): string {
   if (!raw) return "";
   let y = 0, mo = 0, d = 0;
-  const iso = thaiToIso(raw);
+  // Strip weekday prefix if present (e.g. "ส. 22 ก.พ.68" → "22 ก.พ.68")
+  const stripped = raw.replace(/^[^\d]*(\d)/, "$1").trim();
+  const iso = thaiToIso(stripped);
   if (iso) {
     [y, mo, d] = iso.split("-").map(Number);
   } else {
-    const cleaned = raw.replace(/\s+/g, " ").trim();
+    const cleaned = stripped.replace(/\s+/g, " ").trim();
     const m = /^(\d{1,2})\s*([\u0E00-\u0E7F.]+?)\s*(\d{2,4})$/.exec(cleaned);
     if (!m) return raw;
     d = parseInt(m[1], 10);
@@ -78,9 +80,6 @@ function Poster() {
   // Merit lists from any row (typically same per week)
   const sat = rows.find(r => r.saturdayMerit)?.saturdayMerit || "";
   const sun = rows.find(r => r.sundayMerit)?.sundayMerit || "";
-  // Confirmation call date — typically same across the week, pick first non-empty
-  const callDates = Array.from(new Set(rows.map(r => r.callDate).filter(Boolean)));
-  const callDate = callDates.join(", ");
 
   const download = async () => {
     if (!ref.current) return;
@@ -179,21 +178,6 @@ function Poster() {
               หัวข้อบรรยายสัปดาห์นี้ &nbsp; เริ่มเรียน {startTime}
             </div>
 
-            {callDate && (
-              <div
-                style={{
-                  background: "oklch(0.96 0.04 80)",
-                  color: "oklch(0.35 0.12 30)",
-                  padding: "6px 16px",
-                  fontSize: 12,
-                  textAlign: "center",
-                  borderBottom: "1px solid oklch(0.85 0.08 75)",
-                  fontWeight: 600,
-                }}
-              >
-                ฝ่ายทะเบียนโทรยืนยันการสอน วันที่ {callDate}
-              </div>
-            )}
 
             {/* Content */}
             <div style={{ padding: "16px 16px 10px" }}>
