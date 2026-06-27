@@ -176,21 +176,6 @@ function Poster() {
               หัวข้อบรรยายสัปดาห์นี้ &nbsp; เริ่มเรียน {startTime}
             </div>
 
-            {callDate && (
-              <div
-                style={{
-                  background: "oklch(0.96 0.04 80)",
-                  color: "oklch(0.35 0.12 30)",
-                  padding: "6px 16px",
-                  fontSize: 12,
-                  textAlign: "center",
-                  borderBottom: "1px solid oklch(0.85 0.08 75)",
-                  fontWeight: 600,
-                }}
-              >
-                ฝ่ายทะเบียนโทรยืนยันการสอน วันที่ {callDate}
-              </div>
-            )}
 
             {/* Content */}
             <div style={{ padding: "16px 16px 10px" }}>
