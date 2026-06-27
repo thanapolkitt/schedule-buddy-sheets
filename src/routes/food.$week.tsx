@@ -90,20 +90,20 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
 
   const labelCell: React.CSSProperties = {
     border: "1.5px solid #1f2a44",
-    padding: "10px 8px",
+    padding: "12px 10px",
     fontWeight: 600,
     background: "#f0f4ff",
-    width: 86,
+    width: 120,
     verticalAlign: "middle",
-    fontSize: 14,
+    fontSize: 15,
     textAlign: "center",
   };
   const dataCell: React.CSSProperties = {
     border: "1.5px solid #1f2a44",
-    padding: "10px 8px",
+    padding: "12px 10px",
     verticalAlign: "middle",
-    fontSize: 14,
-    minHeight: 36,
+    fontSize: 15,
+    minHeight: 44,
     textAlign: "center",
     wordBreak: "break-word",
   };
