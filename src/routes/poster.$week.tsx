@@ -19,11 +19,13 @@ const THAI_WEEKDAYS = ["อาทิตย์", "จันทร์", "อัง
 function formatFullThaiDate(raw: string): string {
   if (!raw) return "";
   let y = 0, mo = 0, d = 0;
-  const iso = thaiToIso(raw);
+  // Strip weekday prefix if present (e.g. "ส. 22 ก.พ.68" → "22 ก.พ.68")
+  const stripped = raw.replace(/^[^\d]*(\d)/, "$1").trim();
+  const iso = thaiToIso(stripped);
   if (iso) {
     [y, mo, d] = iso.split("-").map(Number);
   } else {
-    const cleaned = raw.replace(/\s+/g, " ").trim();
+    const cleaned = stripped.replace(/\s+/g, " ").trim();
     const m = /^(\d{1,2})\s*([\u0E00-\u0E7F.]+?)\s*(\d{2,4})$/.exec(cleaned);
     if (!m) return raw;
     d = parseInt(m[1], 10);
