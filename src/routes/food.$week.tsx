@@ -226,7 +226,7 @@ function FoodPoster() {
           >
             {grouped.map(([date, items], idx) => (
               <div key={date}>
-                <DayTable rows={items} date={date} week={week} callDate={callDate} />
+                <DayTable rows={items} date={date} week={week} callDate={callDate} note={notes[date] || ""} onNoteChange={(v) => setNotes((prev) => ({ ...prev, [date]: v }))} />
                 {/* Parking note between Saturday and Sunday (after first table) */}
                 {idx === 0 && parking && (
                   <div style={{ textAlign: "center", color: "#c0202a", fontWeight: 700, fontSize: 14, margin: "6px 0 14px" }}>
