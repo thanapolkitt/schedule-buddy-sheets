@@ -167,6 +167,7 @@ function FoodPoster() {
   const grouped = groupByDate(rows);
   const ref = useRef<HTMLDivElement>(null);
   const [busy, setBusy] = useState(false);
+  const [notes, setNotes] = useState<Record<string, string>>({});
 
   const callDates = Array.from(new Set(rows.map((r) => r.callDate).filter(Boolean)));
   const callDate = callDates.join(", ");
