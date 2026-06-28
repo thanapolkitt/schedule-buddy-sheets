@@ -214,7 +214,7 @@ function FoodPoster() {
             className="mx-auto"
             style={{
               width: 820,
-              maxWidth: "100%",
+              minWidth: 820,
               fontFamily: "var(--font-thai)",
               background: "#eef1fb",
               color: "#1f2a44",
