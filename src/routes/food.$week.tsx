@@ -81,7 +81,7 @@ function groupByDate(rows: ScheduleRow[]) {
   });
 }
 
-function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: string; week: string; callDate: string }) {
+function DayTable({ rows, date, week, callDate, note, onNoteChange }: { rows: ScheduleRow[]; date: string; week: string; callDate: string; note: string; onNoteChange: (v: string) => void }) {
   const parsed = parseDate(date);
   // Pad to 3 columns
   const cols = [...rows];
