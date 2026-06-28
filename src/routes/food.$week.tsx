@@ -81,7 +81,7 @@ function groupByDate(rows: ScheduleRow[]) {
   });
 }
 
-function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: string; week: string; callDate: string }) {
+function DayTable({ rows, date, week, callDate, note, onNoteChange }: { rows: ScheduleRow[]; date: string; week: string; callDate: string; note: string; onNoteChange: (v: string) => void }) {
   const parsed = parseDate(date);
   // Pad to 3 columns
   const cols = [...rows];
@@ -156,6 +156,27 @@ function DayTable({ rows, date, week, callDate }: { rows: ScheduleRow[]; date: s
           ))}
         </tbody>
       </table>
+      {/* หมายเหตุ */}
+      <div style={{ marginTop: 8, padding: "8px 10px", border: "1.5px dashed #c0202a", borderRadius: 6, background: "#fff", minHeight: 40 }}>
+        <label style={{ fontSize: 13, fontWeight: 700, color: "#c0202a", display: "block", marginBottom: 4 }}>หมายเหตุ</label>
+        <textarea
+          value={note}
+          onChange={(e) => onNoteChange(e.target.value)}
+          placeholder="กรอกหมายเหตุเพิ่มเติม..."
+          style={{
+            width: "100%",
+            border: "none",
+            outline: "none",
+            background: "transparent",
+            fontSize: 14,
+            color: "#c0202a",
+            fontFamily: "var(--font-thai)",
+            resize: "none",
+            minHeight: 28,
+          }}
+          rows={2}
+        />
+      </div>
     </div>
   );
 }
@@ -167,6 +188,7 @@ function FoodPoster() {
   const grouped = groupByDate(rows);
   const ref = useRef<HTMLDivElement>(null);
   const [busy, setBusy] = useState(false);
+  const [notes, setNotes] = useState<Record<string, string>>({});
 
   const callDates = Array.from(new Set(rows.map((r) => r.callDate).filter(Boolean)));
   const callDate = callDates.join(", ");
@@ -225,7 +247,7 @@ function FoodPoster() {
           >
             {grouped.map(([date, items], idx) => (
               <div key={date}>
-                <DayTable rows={items} date={date} week={week} callDate={callDate} />
+                <DayTable rows={items} date={date} week={week} callDate={callDate} note={notes[date] || ""} onNoteChange={(v) => setNotes((prev) => ({ ...prev, [date]: v }))} />
                 {/* Parking note between Saturday and Sunday (after first table) */}
                 {idx === 0 && parking && (
                   <div style={{ textAlign: "center", color: "#c0202a", fontWeight: 700, fontSize: 14, margin: "6px 0 14px" }}>
