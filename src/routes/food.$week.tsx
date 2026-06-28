@@ -156,6 +156,27 @@ function DayTable({ rows, date, week, callDate, note, onNoteChange }: { rows: Sc
           ))}
         </tbody>
       </table>
+      {/* หมายเหตุ */}
+      <div style={{ marginTop: 8, padding: "8px 10px", border: "1.5px dashed #c0202a", borderRadius: 6, background: "#fff", minHeight: 40 }}>
+        <label style={{ fontSize: 13, fontWeight: 700, color: "#c0202a", display: "block", marginBottom: 4 }}>หมายเหตุ</label>
+        <textarea
+          value={note}
+          onChange={(e) => onNoteChange(e.target.value)}
+          placeholder="กรอกหมายเหตุเพิ่มเติม..."
+          style={{
+            width: "100%",
+            border: "none",
+            outline: "none",
+            background: "transparent",
+            fontSize: 14,
+            color: "#c0202a",
+            fontFamily: "var(--font-thai)",
+            resize: "none",
+            minHeight: 28,
+          }}
+          rows={2}
+        />
+      </div>
     </div>
   );
 }
