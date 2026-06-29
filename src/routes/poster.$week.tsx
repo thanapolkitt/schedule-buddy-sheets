@@ -150,9 +150,8 @@ function Poster() {
                 src={logoAsset.url}
                 alt="โลโก้สถาบันพลังจิตตานุภาพ"
                 style={{
-                  width: 48, height: 48, borderRadius: "50%",
+                  width: 52, height: 52, borderRadius: "50%",
                   objectFit: "cover",
-                  boxShadow: "0 0 0 3px oklch(0.78 0.15 80 / 0.4)",
                 }}
               />
               <div style={{ lineHeight: 1.25 }}>
