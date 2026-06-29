@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { ArrowLeft, Download, Loader2 } from "lucide-react";
 import { toPng } from "html-to-image";
 import { thaiToIso } from "@/lib/thai-date";
+import logoAsset from "@/assets/logo.jpg.asset.json";
 
 const THAI_MONTHS_FULL = [
   "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
