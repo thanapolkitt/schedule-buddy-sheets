@@ -146,15 +146,24 @@ function Poster() {
                 gap: 12,
               }}
             >
-              <img
-                src={logoAsset.url}
-                alt="โลโก้สถาบันพลังจิตตานุภาพ"
+              <div
                 style={{
-                  width: 52, height: 52, borderRadius: "50%",
-                  objectFit: "cover",
+                  width: 56, height: 56, borderRadius: "50%",
+                  overflow: "hidden",
+                  flexShrink: 0,
                 }}
-              />
-              <div style={{ lineHeight: 1.25 }}>
+              >
+                <img
+                  src={logoAsset.url}
+                  alt="โลโก้สถาบันพลังจิตตานุภาพ"
+                  style={{
+                    width: "100%", height: "100%",
+                    objectFit: "cover",
+                    transform: "scale(1.2)",
+                  }}
+                />
+              </div>
+              <div style={{ lineHeight: 1.25, flex: 1 }}>
                 <div style={{ fontSize: 17, fontWeight: 700 }}>สถาบันพลังจิตตานุภาพ</div>
                 <div style={{ fontSize: 11, opacity: 0.85, marginTop: 2 }}>
                   สาขา110 รพ.มิตรภาพเมโมเรียล จ.สระบุรี
