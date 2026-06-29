@@ -159,7 +159,7 @@ function Poster() {
                 <div style={{ fontSize: 11, opacity: 0.85, marginTop: 2 }}>
                   สาขา110 รพ.มิตรภาพเมโมเรียล จ.สระบุรี
                 </div>
-                <div style={{ fontSize: 12, opacity: 0.9, marginTop: 2 }}>
+                <div style={{ fontSize: 12, opacity: 0.9, marginTop: 2, textAlign: "right" }}>
                   หลักสูตรครูสมาธิ — สัปดาห์ที่ {week}
                 </div>
               </div>
