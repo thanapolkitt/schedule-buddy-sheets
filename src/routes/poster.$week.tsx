@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { ArrowLeft, Download, Loader2 } from "lucide-react";
 import { toPng } from "html-to-image";
 import { thaiToIso } from "@/lib/thai-date";
+import logoAsset from "@/assets/logo.jpg.asset.json";
 
 const THAI_MONTHS_FULL = [
   "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
@@ -145,19 +146,21 @@ function Poster() {
                 gap: 12,
               }}
             >
-              <div
+              <img
+                src={logoAsset.url}
+                alt="โลโก้สถาบันพลังจิตตานุภาพ"
                 style={{
                   width: 48, height: 48, borderRadius: "50%",
-                  background: "radial-gradient(circle, oklch(0.85 0.18 80), oklch(0.6 0.18 55))",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 22, boxShadow: "0 0 0 3px oklch(0.78 0.15 80 / 0.4)"
+                  objectFit: "cover",
+                  boxShadow: "0 0 0 3px oklch(0.78 0.15 80 / 0.4)",
                 }}
-              >
-                ☸
-              </div>
-              <div style={{ lineHeight: 1.2 }}>
+              />
+              <div style={{ lineHeight: 1.25 }}>
                 <div style={{ fontSize: 17, fontWeight: 700 }}>สถาบันพลังจิตตานุภาพ</div>
-                <div style={{ fontSize: 12, opacity: 0.9, marginTop: 3 }}>
+                <div style={{ fontSize: 11, opacity: 0.85, marginTop: 2 }}>
+                  สาขา110 รพ.มิตรภาพเมโมเรียล จ.สระบุรี
+                </div>
+                <div style={{ fontSize: 12, opacity: 0.9, marginTop: 2 }}>
                   หลักสูตรครูสมาธิ — สัปดาห์ที่ {week}
                 </div>
               </div>
