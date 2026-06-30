@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const SPREADSHEET_ID = "1ci_J7iMw5pywmIu9Z01yyhPxfVscQrWK_d3YmxbAeT4";
+const SPREADSHEET_ID = "1llWLaCOrU4_a9qfFe0ZEMcdpx_UQeyJk";
 const SHEET_NAME = "Data";
 const GATEWAY = "https://connector-gateway.lovable.dev/google_sheets/v4";
 
