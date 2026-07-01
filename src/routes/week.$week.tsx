@@ -145,12 +145,7 @@ function WeekEdit() {
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">โทรวันที่</label>
               <div className="flex flex-wrap items-center gap-2">
-                <input
-                  type="date"
-                  value={thaiToIso(callDate)}
-                  onChange={(e) => setCallDate(isoToThai(e.target.value))}
-                  className="rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+                <ThaiDatePicker value={callDate} onChange={setCallDate} />
                 {callDate && (
                   <span className="text-sm text-[color:var(--maroon)] font-medium">
                     {callDate}
