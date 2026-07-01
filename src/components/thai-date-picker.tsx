@@ -40,7 +40,7 @@ export function ThaiDatePicker({ value, onChange, className }: Props) {
       <select
         className={sel}
         value={d}
-        onChange={(e) => emit(e.target.value, m, y ? y : String(nowBE))}
+        onChange={(e) => emit(e.target.value, m, beY || String(nowBE))}
         aria-label="วัน"
       >
         <option value="">วัน</option>
@@ -51,7 +51,7 @@ export function ThaiDatePicker({ value, onChange, className }: Props) {
       <select
         className={sel}
         value={m}
-        onChange={(e) => emit(d, e.target.value, y ? y : String(nowBE))}
+        onChange={(e) => emit(d, e.target.value, beY || String(nowBE))}
         aria-label="เดือน"
       >
         <option value="">เดือน</option>
@@ -61,7 +61,7 @@ export function ThaiDatePicker({ value, onChange, className }: Props) {
       </select>
       <select
         className={sel}
-        value={y ? String(parseInt(y, 10) + 543) : ""}
+        value={beY}
         onChange={(e) => emit(d, m, e.target.value)}
         aria-label="ปี พ.ศ."
       >
