@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions, useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { listSchedule, listMasters, updateRow, type ScheduleRow } from "@/lib/schedule.functions";
-import { isoToThai, thaiToIso } from "@/lib/thai-date";
+import { ThaiDatePicker } from "@/components/thai-date-picker";
 import { useState, useEffect } from "react";
 import { ArrowLeft, Save, Image as ImageIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
