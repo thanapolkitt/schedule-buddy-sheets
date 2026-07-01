@@ -32,6 +32,7 @@ export function ThaiDatePicker({ value, onChange, className }: Props) {
     onChange(isoToThai(newIso));
   };
 
+  const beY = y ? String(parseInt(y, 10) + 543) : "";
   const sel = "rounded-lg border bg-background px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring";
 
   return (
