@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions, useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { listSchedule, listMasters, updateRow, type ScheduleRow } from "@/lib/schedule.functions";
-import { isoToThai, thaiToIso } from "@/lib/thai-date";
+import { ThaiDatePicker } from "@/components/thai-date-picker";
 import { useState, useEffect } from "react";
 import { ArrowLeft, Save, Image as ImageIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -145,12 +145,7 @@ function WeekEdit() {
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">โทรวันที่</label>
               <div className="flex flex-wrap items-center gap-2">
-                <input
-                  type="date"
-                  value={thaiToIso(callDate)}
-                  onChange={(e) => setCallDate(isoToThai(e.target.value))}
-                  className="rounded-lg border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+                <ThaiDatePicker value={callDate} onChange={setCallDate} />
                 {callDate && (
                   <span className="text-sm text-[color:var(--maroon)] font-medium">
                     {callDate}

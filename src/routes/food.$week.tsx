@@ -4,7 +4,7 @@ import { listSchedule, type ScheduleRow } from "@/lib/schedule.functions";
 import { useRef, useState } from "react";
 import { ArrowLeft, Download, Loader2 } from "lucide-react";
 import { toPng } from "html-to-image";
-import { thaiToIso } from "@/lib/thai-date";
+import { isoToThai, thaiToIso } from "@/lib/thai-date";
 
 const scheduleQO = queryOptions({
   queryKey: ["schedule"],
@@ -190,8 +190,9 @@ function FoodPoster() {
   const [busy, setBusy] = useState(false);
   const [notes, setNotes] = useState<Record<string, string>>({});
 
-  const callDates = Array.from(new Set(rows.map((r) => r.callDate).filter(Boolean)));
-  const callDate = callDates.join(", ");
+  const rawCall = rows.map((r) => r.callDate).find(Boolean) || "";
+  const normalized = isoToThai(thaiToIso(rawCall));
+  const callDate = normalized || rawCall;
   const parking = rows.map((r) => r.parking).find(Boolean) || "";
 
   const download = async () => {
