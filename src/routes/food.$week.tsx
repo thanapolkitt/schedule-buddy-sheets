@@ -190,8 +190,9 @@ function FoodPoster() {
   const [busy, setBusy] = useState(false);
   const [notes, setNotes] = useState<Record<string, string>>({});
 
-  const callDates = Array.from(new Set(rows.map((r) => r.callDate).filter(Boolean)));
-  const callDate = callDates.join(", ");
+  const rawCall = rows.map((r) => r.callDate).find(Boolean) || "";
+  const normalized = isoToThai(thaiToIso(rawCall));
+  const callDate = normalized || rawCall;
   const parking = rows.map((r) => r.parking).find(Boolean) || "";
 
   const download = async () => {
