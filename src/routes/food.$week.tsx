@@ -4,7 +4,7 @@ import { listSchedule, type ScheduleRow } from "@/lib/schedule.functions";
 import { useRef, useState } from "react";
 import { ArrowLeft, Download, Loader2 } from "lucide-react";
 import { toPng } from "html-to-image";
-import { thaiToIso } from "@/lib/thai-date";
+import { isoToThai, thaiToIso } from "@/lib/thai-date";
 
 const scheduleQO = queryOptions({
   queryKey: ["schedule"],
