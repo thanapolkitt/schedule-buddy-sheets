@@ -1,5 +1,4 @@
-// Helpers to convert between ISO (YYYY-MM-DD) used by <input type="date">
-// and the Thai short format "D MMM.YY" (Buddhist year, 2 digits) used in sheets.
+// Helpers to convert between ISO (YYYY-MM-DD) and Thai date strings.
 
 const THAI_MONTHS_SHORT = [
   "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
@@ -17,6 +16,22 @@ export function isoToThai(iso: string): string {
   return `${d} ${THAI_MONTHS_SHORT[mo - 1]}${beYY}`;
 }
 
+export function isoToThaiFullYear(iso: string): string {
+  if (!iso) return "";
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  if (!m) return iso;
+  const y = parseInt(m[1], 10);
+  const mo = parseInt(m[2], 10);
+  const d = parseInt(m[3], 10);
+  return `${d} ${THAI_MONTHS_SHORT[mo - 1]} ${y + 543}`;
+}
+
+export function normalizeThaiDateFullYear(thai: string): string {
+  if (!thai) return "";
+  const iso = thaiToIso(thai);
+  return iso ? isoToThaiFullYear(iso) : thai;
+}
+
 export function thaiToIso(thai: string): string {
   if (!thai) return "";
   // Already ISO?
@@ -32,6 +47,9 @@ export function thaiToIso(thai: string): string {
   if (monIdx < 0) return "";
   let y = parseInt(m[3], 10);
   if (y < 100) y = 2500 + y; // BE 25xx
+  // Legacy correction: some old call dates were saved as 19xx even though
+  // the intended Thai Buddhist year was 25xx (e.g. 1969 => 2569).
+  if (y >= 1900 && y < 2000) y = 2500 + (y % 100);
   if (y > 2400) y -= 543; // BE -> CE
   return `${y.toString().padStart(4, "0")}-${(monIdx + 1).toString().padStart(2, "0")}-${d.toString().padStart(2, "0")}`;
 }

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { isoToThai, thaiToIso } from "@/lib/thai-date";
+import { isoToThaiFullYear, thaiToIso } from "@/lib/thai-date";
 
 const THAI_MONTHS_FULL = [
   "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
@@ -7,7 +7,7 @@ const THAI_MONTHS_FULL = [
 ];
 
 type Props = {
-  /** Value in Thai short format e.g. "18 ก.พ.68". */
+  /** Value in Thai format e.g. "18 ก.พ. 2568". */
   value: string;
   onChange: (v: string) => void;
   className?: string;
@@ -29,7 +29,7 @@ export function ThaiDatePicker({ value, onChange, className }: Props) {
     if (!nd || !nm || !ny) return;
     const ce = parseInt(ny, 10) - 543;
     const newIso = `${ce.toString().padStart(4, "0")}-${nm.padStart(2, "0")}-${nd.padStart(2, "0")}`;
-    onChange(isoToThai(newIso));
+    onChange(isoToThaiFullYear(newIso));
   };
 
   const beY = y ? String(parseInt(y, 10) + 543) : "";
