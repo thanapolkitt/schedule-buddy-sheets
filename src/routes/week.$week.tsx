@@ -3,6 +3,7 @@ import { useSuspenseQuery, queryOptions, useMutation, useQueryClient, useQuery }
 import { useServerFn } from "@tanstack/react-start";
 import { listSchedule, listMasters, updateRow, type ScheduleRow } from "@/lib/schedule.functions";
 import { ThaiDatePicker } from "@/components/thai-date-picker";
+import { normalizeThaiDateFullYear } from "@/lib/thai-date";
 import { useState, useEffect } from "react";
 import { ArrowLeft, Save, Image as ImageIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -62,12 +63,12 @@ function WeekEdit() {
   const [drafts, setDrafts] = useState<ScheduleRow[]>(weekRows);
   const [satMerit, setSatMerit] = useState<string>(pickShared(weekRows, "saturdayMerit"));
   const [sunMerit, setSunMerit] = useState<string>(pickShared(weekRows, "sundayMerit"));
-  const [callDate, setCallDate] = useState<string>(pickShared(weekRows, "callDate"));
+  const [callDate, setCallDate] = useState<string>(normalizeThaiDateFullYear(pickShared(weekRows, "callDate")));
   useEffect(() => {
     setDrafts(weekRows);
     setSatMerit(pickShared(weekRows, "saturdayMerit"));
     setSunMerit(pickShared(weekRows, "sundayMerit"));
-    setCallDate(pickShared(weekRows, "callDate"));
+    setCallDate(normalizeThaiDateFullYear(pickShared(weekRows, "callDate")));
   }, [data]); // eslint-disable-line
 
   const updateFn = useServerFn(updateRow);
@@ -76,7 +77,7 @@ function WeekEdit() {
       // Apply the shared merit values to every row of the week before saving
       const merged = rows.map((r) => ({
         ...r,
-        callDate,
+        callDate: normalizeThaiDateFullYear(callDate),
         saturdayMerit: satMerit,
         sundayMerit: sunMerit,
       }));
