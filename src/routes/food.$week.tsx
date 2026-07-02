@@ -191,8 +191,12 @@ function FoodPoster() {
   const [notes, setNotes] = useState<Record<string, string>>({});
 
   const rawCall = rows.map((r) => r.callDate).find(Boolean) || "";
-  const normalized = isoToThai(thaiToIso(rawCall));
-  const callDate = normalized || rawCall;
+  const callDate = (() => {
+    const p = parseDate(rawCall);
+    if (!p) return rawCall;
+    const monShort = THAI_MONTHS_SHORT[THAI_MONTHS_FULL.indexOf(p.monthName)];
+    return `${p.day} ${monShort} ${p.beYear}`;
+  })();
   const parking = rows.map((r) => r.parking).find(Boolean) || "";
 
   const download = async () => {
