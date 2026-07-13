@@ -3,7 +3,7 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { listSchedule, type ScheduleRow } from "@/lib/schedule.functions";
 import { useRef, useState } from "react";
 import { ArrowLeft, Download, Loader2 } from "lucide-react";
-import { toPng } from "html-to-image";
+import { toCanvas } from "html-to-image";
 import { thaiToIso } from "@/lib/thai-date";
 import logoAsset from "@/assets/logo-transparent.png.asset.json";
 
@@ -103,52 +103,53 @@ function Poster() {
   const download = async () => {
     if (!ref.current) return;
     setBusy(true);
-    let captureHost: HTMLDivElement | null = null;
+    const poster = ref.current;
+    const previousClassName = poster.className;
+    const previousCssText = poster.style.cssText;
     try {
       await document.fonts?.ready;
-      await waitForImages(ref.current);
+      await waitForImages(poster);
 
-      const captureNode = ref.current.cloneNode(true) as HTMLDivElement;
-      captureNode.className = "";
-      captureNode.style.margin = "0";
-      captureNode.style.width = `${POSTER_WIDTH}px`;
-      captureNode.style.minWidth = `${POSTER_WIDTH}px`;
-      captureNode.style.maxWidth = `${POSTER_WIDTH}px`;
-      captureNode.style.boxSizing = "border-box";
+      poster.className = "";
+      poster.style.cssText = previousCssText;
+      poster.style.margin = "0";
+      poster.style.marginLeft = "0";
+      poster.style.marginRight = "0";
+      poster.style.width = `${POSTER_WIDTH}px`;
+      poster.style.minWidth = `${POSTER_WIDTH}px`;
+      poster.style.maxWidth = `${POSTER_WIDTH}px`;
+      poster.style.transform = "none";
+      poster.style.boxSizing = "border-box";
 
-      captureHost = document.createElement("div");
-      captureHost.style.position = "fixed";
-      captureHost.style.left = "-10000px";
-      captureHost.style.top = "0";
-      captureHost.style.width = `${POSTER_WIDTH}px`;
-      captureHost.style.overflow = "visible";
-      captureHost.style.pointerEvents = "none";
-      captureHost.style.background = "#f5e8c8";
-      captureHost.appendChild(captureNode);
-      document.body.appendChild(captureHost);
+      await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
 
-      await waitForImages(captureNode);
-
-      const dataUrl = await toPng(captureNode, {
+      const posterHeight = Math.ceil(poster.getBoundingClientRect().height);
+      const canvas = await toCanvas(poster, {
         pixelRatio: 2,
         cacheBust: true,
         backgroundColor: "#f5e8c8",
         width: POSTER_WIDTH,
-        height: Math.ceil(captureNode.scrollHeight),
+        height: posterHeight,
+        canvasWidth: POSTER_WIDTH,
+        canvasHeight: posterHeight,
         style: {
           margin: "0",
+          marginLeft: "0",
+          marginRight: "0",
           width: `${POSTER_WIDTH}px`,
           minWidth: `${POSTER_WIDTH}px`,
           maxWidth: `${POSTER_WIDTH}px`,
           transform: "none",
         },
       });
+      const dataUrl = canvas.toDataURL("image/png");
       const a = document.createElement("a");
       a.href = dataUrl;
       a.download = `ตารางสอน-สัปดาห์-${week}.png`;
       a.click();
     } finally {
-      captureHost?.remove();
+      poster.className = previousClassName;
+      poster.style.cssText = previousCssText;
       setBusy(false);
     }
   };
