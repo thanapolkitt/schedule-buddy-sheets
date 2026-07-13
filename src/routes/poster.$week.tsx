@@ -124,7 +124,7 @@ function Poster() {
             className="mx-auto"
             style={{
               width: 420,
-              maxWidth: "100%",
+              minWidth: 420,
               fontFamily: "var(--font-thai)",
               background:
                 "radial-gradient(circle at 20% 0%, oklch(0.96 0.05 80) 0%, oklch(0.92 0.05 75) 60%, oklch(0.88 0.06 70) 100%)",
