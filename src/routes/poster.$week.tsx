@@ -16,6 +16,24 @@ const THAI_MONTHS_SHORT = [
   "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.",
 ];
 const THAI_WEEKDAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+const POSTER_WIDTH = 420;
+
+function waitForImages(element: HTMLElement) {
+  const images = Array.from(element.querySelectorAll("img"));
+  return Promise.all(
+    images.map(
+      (img) =>
+        new Promise<void>((resolve) => {
+          if (img.complete) {
+            resolve();
+            return;
+          }
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        }),
+    ),
+  );
+}
 
 function formatFullThaiDate(raw: string): string {
   if (!raw) return "";
@@ -85,13 +103,52 @@ function Poster() {
   const download = async () => {
     if (!ref.current) return;
     setBusy(true);
+    let captureHost: HTMLDivElement | null = null;
     try {
-      const dataUrl = await toPng(ref.current, { pixelRatio: 2, cacheBust: true, backgroundColor: "#f5e8c8" });
+      await document.fonts?.ready;
+      await waitForImages(ref.current);
+
+      const captureNode = ref.current.cloneNode(true) as HTMLDivElement;
+      captureNode.className = "";
+      captureNode.style.margin = "0";
+      captureNode.style.width = `${POSTER_WIDTH}px`;
+      captureNode.style.minWidth = `${POSTER_WIDTH}px`;
+      captureNode.style.maxWidth = `${POSTER_WIDTH}px`;
+      captureNode.style.boxSizing = "border-box";
+
+      captureHost = document.createElement("div");
+      captureHost.style.position = "fixed";
+      captureHost.style.left = "-10000px";
+      captureHost.style.top = "0";
+      captureHost.style.width = `${POSTER_WIDTH}px`;
+      captureHost.style.overflow = "visible";
+      captureHost.style.pointerEvents = "none";
+      captureHost.style.background = "#f5e8c8";
+      captureHost.appendChild(captureNode);
+      document.body.appendChild(captureHost);
+
+      await waitForImages(captureNode);
+
+      const dataUrl = await toPng(captureNode, {
+        pixelRatio: 2,
+        cacheBust: true,
+        backgroundColor: "#f5e8c8",
+        width: POSTER_WIDTH,
+        height: Math.ceil(captureNode.scrollHeight),
+        style: {
+          margin: "0",
+          width: `${POSTER_WIDTH}px`,
+          minWidth: `${POSTER_WIDTH}px`,
+          maxWidth: `${POSTER_WIDTH}px`,
+          transform: "none",
+        },
+      });
       const a = document.createElement("a");
       a.href = dataUrl;
       a.download = `ตารางสอน-สัปดาห์-${week}.png`;
       a.click();
     } finally {
+      captureHost?.remove();
       setBusy(false);
     }
   };
@@ -123,8 +180,8 @@ function Poster() {
             ref={ref}
             className="mx-auto"
             style={{
-              width: 420,
-              minWidth: 420,
+              width: POSTER_WIDTH,
+              minWidth: POSTER_WIDTH,
               fontFamily: "var(--font-thai)",
               background:
                 "radial-gradient(circle at 20% 0%, oklch(0.96 0.05 80) 0%, oklch(0.92 0.05 75) 60%, oklch(0.88 0.06 70) 100%)",
