@@ -208,19 +208,19 @@ function Poster() {
                 src={logoAsset.url}
                 alt="โลโก้สถาบันพลังจิตตานุภาพ"
                 style={{
-                  width: 64,
-                  height: 64,
+                  width: 54,
+                  height: 54,
                   objectFit: "contain",
                   flexShrink: 0,
                   display: "block",
                 }}
               />
-              <div style={{ lineHeight: 1.25, flex: 1 }}>
-                <div style={{ fontSize: 17, fontWeight: 700 }}>สถาบันพลังจิตตานุภาพ</div>
+              <div style={{ lineHeight: 1.18, flex: 1 }}>
+                <div style={{ fontSize: 16, fontWeight: 700 }}>สถาบันพลังจิตตานุภาพ</div>
                 <div style={{ fontSize: 11, opacity: 0.85, marginTop: 2 }}>
                   สาขา110 รพ.มิตรภาพเมโมเรียล จ.สระบุรี
                 </div>
-                <div style={{ fontSize: 12, opacity: 0.9, marginTop: 4, textAlign: "right" }}>
+                <div style={{ fontSize: 12, opacity: 0.9, marginTop: 2, textAlign: "right" }}>
                   หลักสูตรครูสมาธิ — สัปดาห์ที่ {week}
                 </div>
               </div>
@@ -231,8 +231,8 @@ function Poster() {
               style={{
                 background: "oklch(0.35 0.12 30)",
                 color: "oklch(0.98 0.02 80)",
-                padding: "9px 16px",
-                fontSize: 14,
+                padding: "7px 16px",
+                fontSize: 13,
                 fontWeight: 600,
                 textAlign: "center",
                 borderBottom: "3px solid oklch(0.78 0.15 80)",
@@ -243,17 +243,17 @@ function Poster() {
 
 
             {/* Content */}
-            <div style={{ padding: "16px 16px 10px" }}>
+            <div style={{ padding: "11px 16px 7px" }}>
               {grouped.map(([date, items]) => (
-                <div key={date} style={{ marginBottom: 14 }}>
+                <div key={date} style={{ marginBottom: 10 }}>
                   <div
                     style={{
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: 700,
                       color: "oklch(0.45 0.2 30)",
                       borderBottom: "2px dashed oklch(0.78 0.15 80)",
-                      paddingBottom: 4,
-                      marginBottom: 8,
+                      paddingBottom: 2,
+                      marginBottom: 6,
                     }}
                   >
                     {formatFullThaiDate(date) || date}
@@ -264,15 +264,15 @@ function Poster() {
                     const code = m?.[1] || "";
                     const title = m?.[2] || r.topic;
                     return (
-                      <div key={r.rowIndex} style={{ display: "flex", gap: 8, marginBottom: 8, alignItems: "flex-start" }}>
+                      <div key={r.rowIndex} style={{ display: "flex", gap: 7, marginBottom: 5, alignItems: "flex-start" }}>
                         {code ? (
                           <div
                             style={{
                               minWidth: 52,
                               fontWeight: 700,
                               color: "oklch(0.35 0.12 30)",
-                              fontSize: 13,
-                              paddingTop: 2,
+                              fontSize: 12,
+                              paddingTop: 1,
                             }}
                           >
                             {code}
@@ -280,17 +280,17 @@ function Poster() {
                         ) : /^(สวดมนต์|กิจกรรม|วันหยุด)/.test(r.topic) ? (
                           <div style={{ minWidth: 52 }} />
                         ) : null}
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: 14, fontWeight: 600, color: "oklch(0.25 0.04 35)" }}>
+                        <div style={{ flex: 1, lineHeight: 1.22 }}>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: "oklch(0.25 0.04 35)" }}>
                             {title}
                           </div>
                           {r.teacher && (
-                            <div style={{ fontSize: 12, color: "oklch(0.4 0.12 250)", marginTop: 2 }}>
+                            <div style={{ fontSize: 11, color: "oklch(0.4 0.12 250)", marginTop: 1 }}>
                               ผู้บรรยาย {r.teacher}
                             </div>
                           )}
                           {r.time && (
-                            <div style={{ fontSize: 11, color: "oklch(0.45 0.04 50)", marginTop: 2 }}>
+                            <div style={{ fontSize: 10, color: "oklch(0.45 0.04 50)", marginTop: 1 }}>
                               {r.period} · {r.time}
                             </div>
                           )}
@@ -309,17 +309,17 @@ function Poster() {
                   style={{
                     background: "oklch(0.35 0.12 30)",
                     color: "oklch(0.98 0.02 80)",
-                    padding: "8px 16px",
+                    padding: "6px 16px",
                     textAlign: "center",
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: 600,
                   }}
                 >
                   อาจารย์บุญสัปดาห์นี้
                 </div>
-                <div style={{ padding: "10px 16px 16px", fontSize: 12, lineHeight: 1.6 }}>
+                <div style={{ padding: "7px 16px 11px", fontSize: 11, lineHeight: 1.35 }}>
                   {sat && (
-                    <div style={{ marginBottom: 4 }}>
+                    <div style={{ marginBottom: 2 }}>
                       <span style={{ fontWeight: 700, color: "oklch(0.35 0.12 30)" }}>เสาร์: </span>
                       {sat}
                     </div>
