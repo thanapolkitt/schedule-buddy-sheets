@@ -198,7 +198,7 @@ function Poster() {
               style={{
                 background: "linear-gradient(90deg, oklch(0.35 0.12 30), oklch(0.45 0.16 40))",
                 color: "oklch(0.98 0.02 80)",
-                padding: "14px 16px",
+                padding: "10px 16px",
                 display: "flex",
                 alignItems: "center",
                 gap: 12,
@@ -215,12 +215,12 @@ function Poster() {
                   display: "block",
                 }}
               />
-              <div style={{ lineHeight: 1.18, flex: 1 }}>
+              <div style={{ lineHeight: 1.15, flex: 1 }}>
                 <div style={{ fontSize: 16, fontWeight: 700 }}>สถาบันพลังจิตตานุภาพ</div>
-                <div style={{ fontSize: 11, opacity: 0.85, marginTop: 2 }}>
+                <div style={{ fontSize: 11, opacity: 0.85 }}>
                   สาขา110 รพ.มิตรภาพเมโมเรียล จ.สระบุรี
                 </div>
-                <div style={{ fontSize: 12, opacity: 0.9, marginTop: 2, textAlign: "right" }}>
+                <div style={{ fontSize: 12, opacity: 0.9, marginTop: 0, textAlign: "right" }}>
                   หลักสูตรครูสมาธิ — สัปดาห์ที่ {week}
                 </div>
               </div>
@@ -241,9 +241,8 @@ function Poster() {
               หัวข้อบรรยายสัปดาห์นี้ &nbsp; เริ่มเรียน {startTime}
             </div>
 
-
             {/* Content */}
-            <div style={{ padding: "11px 16px 7px" }}>
+            <div style={{ padding: "11px 16px 4px" }}>
               {grouped.map(([date, items]) => (
                 <div key={date} style={{ marginBottom: 10 }}>
                   <div
@@ -285,7 +284,7 @@ function Poster() {
                             {title}
                           </div>
                           {r.teacher && (
-                            <div style={{ fontSize: 11, color: "oklch(0.4 0.12 250)", marginTop: 1 }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: "oklch(0.4 0.12 250)", marginTop: 1 }}>
                               ผู้บรรยาย {r.teacher}
                             </div>
                           )}
@@ -309,7 +308,7 @@ function Poster() {
                   style={{
                     background: "oklch(0.35 0.12 30)",
                     color: "oklch(0.98 0.02 80)",
-                    padding: "6px 16px",
+                    padding: "4px 16px",
                     textAlign: "center",
                     fontSize: 13,
                     fontWeight: 600,
