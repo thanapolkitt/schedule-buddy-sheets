@@ -290,7 +290,7 @@ function Poster() {
                           )}
                           {r.time && (
                             <div style={{ fontSize: 10, color: "oklch(0.45 0.04 50)", marginTop: 1 }}>
-                              {r.period} · {r.time}
+                              เวลา · {r.time}
                             </div>
                           )}
                         </div>
